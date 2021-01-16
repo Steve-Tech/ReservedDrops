@@ -1,0 +1,4 @@
+# Config File for ReservedDrops
+timeout: 60
+reserve-mob-drops: true
+allow-entity-pickup: false

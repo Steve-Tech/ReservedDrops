@@ -1,0 +1,19 @@
+name: ReservedDrops
+main: me.stevetech.reserveddrops.ReservedDrops
+version: 1.0
+description: Reserve Drops for the casualty
+author: Steve-Tech
+api-version: 1.16
+commands:
+  ReservedDrops:
+    description: ReservedDrops reload command
+    usage: /<command> [reload]
+    permission: ReservedDrops.reload
+    permission-message: You don't have permission to use this command!
+permissions:
+  ReservedDrops.bypass:
+    description: Bypass Reserved Drops
+    default: false
+  ReservedDrops.reload:
+    description: ReservedDrops reload command
+    default: op
