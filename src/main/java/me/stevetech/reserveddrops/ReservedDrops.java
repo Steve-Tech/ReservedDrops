@@ -78,18 +78,23 @@ public class ReservedDrops extends JavaPlugin implements Listener {
         ItemMeta itemMeta = itemStack.getItemMeta();
         PersistentDataContainer container = itemMeta.getPersistentDataContainer();
 
-        if(container.has(keyPlayer, PersistentDataType.STRING) && container.has(keyTime, PersistentDataType.LONG)) {
+        if (container.has(keyPlayer, PersistentDataType.STRING) && container.has(keyTime, PersistentDataType.LONG)) {
             UUID itemsPlayer = UUID.fromString(container.get(keyPlayer, PersistentDataType.STRING));
             long deathTime = container.get(keyTime, PersistentDataType.LONG);
-            if (deathTime + getConfig().getInt("timeout") < Instant.now().getEpochSecond()) {
+            if (deathTime + getConfig().getInt("timeout") > Instant.now().getEpochSecond()) {
                 if (event.getEntity() instanceof Player) {
                     Player player = (Player) event.getEntity();
-                    if (!(player.getUniqueId() == itemsPlayer || player.hasPermission("ReservedDrops.bypass"))) {
+                    if (!(player.getUniqueId().equals(itemsPlayer) || player.hasPermission("ReservedDrops.bypass"))) {
                         event.setCancelled(true);
                     }
                 } else if (!(getConfig().getBoolean("allow-entity-pickup"))) {
                     event.setCancelled(true);
                 }
+            }
+            if (!(event.isCancelled())) {
+                container.remove(keyPlayer);
+                container.remove(keyTime);
+                itemStack.setItemMeta(itemMeta);
             }
         }
     }
